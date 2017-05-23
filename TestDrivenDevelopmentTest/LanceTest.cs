@@ -1,10 +1,16 @@
 ﻿using NUnit.Framework;
 using TestDrivenDevelopment.Leilao;
 
+/// <summary>
+/// O ideal é escrevermos apenas um único teste para cada possível cenário diferente! Por exemplo, um cenário que levantamos é justamente lances em ordem crescente.
+/// Já temos um teste para ele: DeveEntenderLancesEmOrdemCrescente(). Não precisamos de outro para o mesmo cenário! Na área de testes de software, chamamos isso de classe de equivalência.
+/// Precisamos de um teste por classe de equivalência.
+/// </summary>
+
 namespace TestDrivenDevelopment
 {
     [TestFixture]
-    public class Test
+    public class LanceTest
     {
         [Test]
         public void LancesEmOrdemCrescentes()

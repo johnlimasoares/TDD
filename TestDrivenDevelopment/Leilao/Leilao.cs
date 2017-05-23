@@ -19,7 +19,26 @@ namespace TestDrivenDevelopment.Leilao
 
         public void Propoe(Lance lance)
         {
-            Lances.Add(lance);
+            if (Lances.Count == 0 || PodeDarLance(lance.Usuario))
+            {
+                Lances.Add(lance);
+            }
+
+        }
+
+        private bool PodeDarLance(Usuario usuario)
+        {
+            return !UltimoLanceDado().Usuario.Equals(usuario) && GetTotalLancesUsuario(usuario) < 5;
+        }
+
+        private int GetTotalLancesUsuario(Usuario usuario)
+        {
+            return Lances.Where(x => x.Usuario == usuario).Count();
+        }
+
+        private Lance UltimoLanceDado()
+        {
+            return Lances[Lances.Count - 1];
         }
     }
 }
