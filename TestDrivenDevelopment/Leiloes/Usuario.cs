@@ -1,4 +1,4 @@
-﻿namespace TestDrivenDevelopment.Leilao
+﻿namespace TestDrivenDevelopment.Leiloes
 {
     public class Usuario
     {

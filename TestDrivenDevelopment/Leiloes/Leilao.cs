@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestDrivenDevelopment.Leilao
+namespace TestDrivenDevelopment.Leiloes
 {
     public class Leilao
     {

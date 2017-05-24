@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using TestDrivenDevelopment.Leilao;
+using TestDrivenDevelopment.Leiloes;
 
 /// <summary>
 /// O ideal é escrevermos apenas um único teste para cada possível cenário diferente! Por exemplo, um cenário que levantamos é justamente lances em ordem crescente.
@@ -12,85 +12,83 @@ namespace TestDrivenDevelopment
     [TestFixture]
     public class LanceTest
     {
+        private Avaliador leiloeiro;
+        private Usuario joao;
+        private Usuario jose;
+        private Usuario maria;
+        private Usuario pedro;
+        private Usuario ana;
+
+        [SetUp]
+        public void CriaObjetos()
+        {
+            leiloeiro = new Avaliador();
+            joao = new Usuario("joao");
+            jose = new Usuario("Jose");
+            maria = new Usuario("Maria");
+            pedro = new Usuario("pedro");
+            ana = new Usuario("Ana");
+        }
+
         [Test]
         public void LancesEmOrdemCrescentes()
         {
-            var joao = new Usuario("joao");
-            var jose = new Usuario("Jose");
-            var maria = new Usuario("Maria");
+            var leilao = new CriadorDeLeilao().Para("Casa 500m")
+            .Lance(jose, 1000)
+            .Lance(joao, 1300)
+            .Lance(maria, 6600)
+            .Constroi();
 
-            var leilao = new Leilao.Leilao("Casa");
-            leilao.Propoe(new Lance(jose, 1000));
-            leilao.Propoe(new Lance(joao, 1300));
-            leilao.Propoe(new Lance(maria, 6600));
+            leiloeiro.Avalia(leilao);
 
-            var avaliador = new Avaliador();
-            avaliador.Avalia(leilao);
-
-
-            Assert.AreEqual(6600, avaliador.GetMaiorLance());
-            Assert.AreEqual(1000, avaliador.GetMenorLance());
-            Assert.AreEqual(2966.66, avaliador.GetValorMedioLances(), 0.01);
+            Assert.AreEqual(6600, leiloeiro.GetMaiorLance());
+            Assert.AreEqual(1000, leiloeiro.GetMenorLance());
+            Assert.AreEqual(2966.66, leiloeiro.GetValorMedioLances(), 0.01);
         }
 
         [Test]
         public void LancesEmOrdemDecrescentes()
         {
-            var joao = new Usuario("joao");
-            var jose = new Usuario("Jose");
-            var maria = new Usuario("Maria");
+            var leilao = new CriadorDeLeilao().Para("Mustang")
+            .Lance(maria, 6600)
+            .Lance(joao, 1300)
+            .Lance(jose, 1000)
+            .Constroi();
 
-            var leilao = new Leilao.Leilao("Casa");
-            leilao.Propoe(new Lance(maria, 6600));
-            leilao.Propoe(new Lance(joao, 1300));
-            leilao.Propoe(new Lance(jose, 1000));
+            leiloeiro.Avalia(leilao);
 
-
-            var avaliador = new Avaliador();
-            avaliador.Avalia(leilao);
-
-
-            Assert.AreEqual(6600, avaliador.GetMaiorLance());
-            Assert.AreEqual(1000, avaliador.GetMenorLance());
-            Assert.AreEqual(2966.66, avaliador.GetValorMedioLances(), 0.01);
+            Assert.AreEqual(6600, leiloeiro.GetMaiorLance());
+            Assert.AreEqual(1000, leiloeiro.GetMenorLance());
+            Assert.AreEqual(2966.66, leiloeiro.GetValorMedioLances(), 0.01);
         }
 
         [Test]
         public void LeilaoComUmLance()
         {
-            var joao = new Usuario("joao");
+            var leilao = new CriadorDeLeilao().Para("Fazenda")
+            .Lance(joao, 1300)
+            .Constroi();
 
-            var leilao = new Leilao.Leilao("Casa");
-            leilao.Propoe(new Lance(joao, 1300));
+            leiloeiro.Avalia(leilao);
 
-            var avaliador = new Avaliador();
-            avaliador.Avalia(leilao);
-
-            Assert.AreEqual(1300, avaliador.GetMaiorLance());
-            Assert.AreEqual(1300, avaliador.GetMenorLance());
-            Assert.AreEqual(1300, avaliador.GetValorMedioLances(), 0.01);
-
+            Assert.AreEqual(1300, leiloeiro.GetMaiorLance());
+            Assert.AreEqual(1300, leiloeiro.GetMenorLance());
+            Assert.AreEqual(1300, leiloeiro.GetValorMedioLances(), 0.01);
         }
 
         [Test]
         public void TestarTresMaioresLances()
         {
-            var joao = new Usuario("joao");
-            var maria = new Usuario("maria");
-            var ana = new Usuario("ana");
-            var pedro = new Usuario("pedro");
+            var leilao = new CriadorDeLeilao().Para("Terreno")
+            .Lance(maria, 1300.50)
+            .Lance(joao, 1100.00)
+            .Lance(ana, 800.00)
+            .Lance(pedro, 1300.00)
+            .Constroi();
 
-            var leilao = new Leilao.Leilao("Casa");
-            leilao.Propoe(new Lance(maria, 1300.50));
-            leilao.Propoe(new Lance(joao, 1100.00));
-            leilao.Propoe(new Lance(ana, 800.00));
-            leilao.Propoe(new Lance(pedro, 1300.00));
+            leiloeiro.Avalia(leilao);
 
-
-            var avaliador = new Avaliador();
-            avaliador.Avalia(leilao);
-
-            var maioresLances = avaliador.GetTresMaioresLances();
+            var maioresLances = leiloeiro.GetTresMaioresLances();
             Assert.AreEqual(3, maioresLances.Count);
             Assert.AreEqual(1300.50, maioresLances[0].Valor);
             Assert.AreEqual(1300.00, maioresLances[1].Valor);

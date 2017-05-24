@@ -49,10 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Leilao\Avaliador.cs" />
-    <Compile Include="Leilao\Lance.cs" />
-    <Compile Include="Leilao\Leilao.cs" />
-    <Compile Include="Leilao\Usuario.cs" />
+    <Compile Include="Leiloes\Avaliador.cs" />
+    <Compile Include="Leiloes\Lance.cs" />
+    <Compile Include="Leiloes\Leilao.cs" />
+    <Compile Include="Leiloes\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
