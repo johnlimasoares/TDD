@@ -91,5 +91,14 @@ namespace TestDrivenDevelopmentTest
             Assert.AreEqual(10500, leilao.Lances[ultimoLance].Valor);
 
         }
+
+        [Test]
+        [ExpectedException(typeof(Exception))]
+        public void NaoDeveHavaliarLeiloesSemNenhumLanceDado()
+        {
+            var leilao = new CriadorDeLeilao().Para("Mochila").Constroi();
+            leiloeiro.Avalia(leilao);
+        }
+
     }
 }

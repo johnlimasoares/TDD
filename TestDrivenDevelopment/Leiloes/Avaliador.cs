@@ -15,6 +15,10 @@ namespace TestDrivenDevelopment.Leiloes
 
         public void Avalia(Leilao leilao)
         {
+            if (leilao.Lances.Count == 0) {
+                throw new Exception("Não será havaliado leilões sem lances.");
+            }
+
             foreach (var lance in leilao.Lances)
             {
 
